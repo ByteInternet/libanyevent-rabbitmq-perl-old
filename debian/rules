@@ -1,0 +1,59 @@
+#!/usr/bin/make -f
+# -*- mode: makefile; coding: utf-8 -*-
+# Copyright 2013, Jonas Smedegaard <dr@jones.dk>
+# Description: Main Debian packaging script for AnyEvent::RabbitMQ
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3, or (at your option)
+# any later version.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+include /usr/share/cdbs/1/rules/upstream-tarball.mk
+include /usr/share/cdbs/1/rules/utils.mk
+include /usr/share/cdbs/1/class/perl-makemaker.mk
+include /usr/share/cdbs/1/rules/debhelper.mk
+
+pkg = $(DEB_SOURCE_PACKAGE)
+
+DEB_UPSTREAM_PACKAGE = AnyEvent-RabbitMQ
+DEB_UPSTREAM_URL = http://www.cpan.org/authors/id/B/BO/BOBTFISH
+DEB_UPSTREAM_TARBALL_MD5 = d7d0104e5555bef1c7c30452585bf397
+
+# DFSG-nonfree AMQP license
+DEB_UPSTREAM_REPACKAGE_EXCLUDES = \
+ share/fixed_amqp0-8.xml \
+ share/fixed_amqp0-9-1.xml
+
+# Needed by upstream build and (always/often) at runtime
+perl-deps = anyevent devel-globaldestruction file-sharedir
+perl-deps += list-moreutils net-amqp readonly namespace-clean
+deps = $(patsubst %,$(comma) lib%-perl,$(perl-deps))
+deps-recommend = amqp-specs (>= 1-0r0-2~)
+
+# Needed by upstream testsuite
+deps-test = libtest-exception-perl
+
+CDBS_BUILD_DEPENDS +=, $(deps), $(deps-recommend), $(deps-test)
+CDBS_DEPENDS_$(pkg) = $(deps)
+CDBS_RECOMMENDS_$(pkg) = $(deps-recommend)
+
+# apparently upstream doesn't properly clean up after itself
+clean::
+	rm -f Makefile.old
+
+# use separately packaged spec files
+DEB_DH_LINK_$(pkg) = \
+ /usr/share/amqp/specs/0-9-1-rabbit/amqp0-9-1.stripped.extended.xml \
+ /usr/share/perl5/auto/share/dist/AnyEvent-RabbitMQ/share/fixed_amqp0-9-1.xml
+common-configure-arch common-configure-indep::
+	ln -sf /usr/share/amqp/specs/0-9-1-rabbit/amqp0-9-1.stripped.extended.xml share/fixed_amqp0-9-1.xml
+clean::
+	rm -rf share/fixed_amqp0-9-1.xml

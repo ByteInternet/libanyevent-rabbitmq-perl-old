@@ -1,0 +1,37 @@
+Source: libanyevent-rabbitmq-perl
+Section: perl
+Priority: optional
+Build-Depends: @cdbs@
+Maintainer: Debian Perl Group <pkg-perl-maintainers@lists.alioth.debian.org>
+Uploaders: Jonas Smedegaard <dr@jones.dk>
+Standards-Version: 3.9.4
+Vcs-Git: git://anonscm.debian.org/git/pkg-perl/packages/libanyevent-rabbitmq-perl
+Vcs-Browser: http://anonscm.debian.org/gitweb/?p=pkg-perl/packages/libanyevent-rabbitmq-perl.git
+Homepage: http://search.cpan.org/dist/AnyEvent-RabbitMQ/
+
+Package: libanyevent-rabbitmq-perl
+Architecture: all
+Depends: ${cdbs:Depends},
+ ${misc:Depends},
+ ${perl:Depends}
+Recommends: ${cdbs:Recommends}
+Suggests: ${cdbs:Suggests}
+Description: asynchronous and multi channel Perl AMQP client
+ AnyEvent::RabbitMQ is an AMQP (Advanced Message Queuing Protocol)
+ client library, that is intended to allow you to interact with
+ AMQP-compliant message brokers/servers such as RabbitMQ in an
+ asynchronous fashion.
+ .
+ You can use AnyEvent::RabbitMQ to -
+ .
+  * Declare and delete exchanges
+  * Declare, delete, bind and unbind queues
+  * Set QoS and confirm mode
+  * Publish, consume, get, ack, recover and reject messages
+  * Select, commit and rollback transactions
+ .
+ AnyEvent::RabbitMQ is known to work with RabbitMQ versions 2.5.1 and
+ versions 0-8 and 0-9-1 of the AMQP specification.
+ .
+ This client is the non-blocking version, for a blocking version with a
+ similar API, see Net::RabbitFoot.

@@ -1,0 +1,6 @@
+libanyevent-rabbitmq-perl (1.15~dfsg-1) unstable; urgency=low
+
+  * Initial packaging release.
+    Closes: bug#703660.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Sun, 21 Jul 2013 18:29:13 +0200

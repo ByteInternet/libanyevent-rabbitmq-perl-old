@@ -52,8 +52,8 @@ clean::
 # use separately packaged spec files
 DEB_DH_LINK_$(pkg) = \
  /usr/share/amqp/specs/0-9-1-rabbit/amqp0-9-1.stripped.extended.xml \
- /usr/share/perl5/auto/share/dist/AnyEvent-RabbitMQ/share/fixed_amqp0-9-1.xml
+ /usr/share/perl5/auto/share/dist/AnyEvent-RabbitMQ/fixed_amqp0-9-1.xml
 common-configure-arch common-configure-indep::
-	ln -sf /usr/share/amqp/specs/0-9-1-rabbit/amqp0-9-1.stripped.extended.xml share/fixed_amqp0-9-1.xml
+	ln -sf /usr/share/amqp/specs/0-9-1-rabbit/amqp0-9-1.stripped.extended.xml fixed_amqp0-9-1.xml
 clean::
-	rm -rf share/fixed_amqp0-9-1.xml
+	rm -rf fixed_amqp0-9-1.xml
